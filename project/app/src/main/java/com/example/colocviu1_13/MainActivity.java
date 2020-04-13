@@ -3,12 +3,101 @@ package com.example.colocviu1_13;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    Button navigateButton, buttonNorth, buttonEast, buttonWest, buttonSouth;
+    TextView textView, textSum;
+
+    private void increaseSum() {
+        int sum = Integer.parseInt(textSum.getText().toString());
+        String newSum = String.valueOf(sum + 1);
+        textSum.setText(newSum);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        navigateButton = (Button)findViewById(R.id.buttonNavigate);
+        buttonNorth = (Button)findViewById(R.id.buttonNorth);
+        buttonEast = (Button)findViewById(R.id.buttonEast);
+        buttonWest = (Button)findViewById(R.id.buttonWest);
+        buttonSouth = (Button)findViewById(R.id.buttonSouth);
+        textView = (TextView)findViewById(R.id.textView);
+        textSum = (TextView)findViewById(R.id.textSum);
+
+        buttonNorth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = textView.getText().toString();
+                String adder = ((Button)v).getText().toString();
+                String newtext = text + " " + adder;
+                textView.setText(newtext);
+
+                increaseSum();
+            }
+        });
+
+        buttonEast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = textView.getText().toString();
+                String adder = ((Button)v).getText().toString();
+                String newtext = text + " " + adder;
+                textView.setText(newtext);
+
+                increaseSum();
+            }
+        });
+
+        buttonWest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = textView.getText().toString();
+                String adder = ((Button)v).getText().toString();
+                String newtext = text + " " + adder;
+                textView.setText(newtext);
+
+                increaseSum();
+            }
+        });
+
+        buttonSouth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = textView.getText().toString();
+                String adder = ((Button)v).getText().toString();
+                String newtext = text + " " + adder;
+                textView.setText(newtext);
+
+                increaseSum();
+            }
+        });
+
+
+        if (savedInstanceState == null) {
+            Log.d("TAG", "onCreate() method was invoked without a previous state");
+        } else {
+            Log.d("TAG", "onCreate() method was invoked WITH a previous state");
+            if (savedInstanceState.containsKey("SUM")) {
+                textSum.setText(savedInstanceState.getString("SUM"));
+            }
+        }
+
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putString("SUM", textSum.getText().toString());
     }
 }
