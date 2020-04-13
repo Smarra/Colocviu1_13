@@ -2,7 +2,10 @@ package com.example.colocviu1_13;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     Button navigateButton, buttonNorth, buttonEast, buttonWest, buttonSouth, buttonIntent;
     TextView textView, textSum;
     boolean n = false, s = false, e = false, w = false;
+    private IntentFilter intentFilter = new IntentFilter();
+    final public static String[] actionTypes = {
+            "ro.pub.cs.systems.eim.practicaltest01.instructions",
+    };
 
     private void increaseSum() {
         int sum = Integer.parseInt(textSum.getText().toString());
@@ -116,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        for (int index = 0; index < actionTypes.length; index++) {
+            intentFilter.addAction(actionTypes[index]);
+        }
     }
 
     @Override
@@ -130,6 +140,26 @@ public class MainActivity extends AppCompatActivity {
                 textSum.setText("0");
                 break;
         }
+    }
+
+    private MessageBroadcastReceiver messageBroadcastReceiver = new MessageBroadcastReceiver();
+    private class MessageBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("TAG", intent.getStringExtra("message"));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(messageBroadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(messageBroadcastReceiver);
+        super.onPause();
     }
 
     @Override

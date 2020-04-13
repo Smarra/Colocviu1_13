@@ -16,8 +16,7 @@ public class ProcessingThread extends Thread {
     private String instr;
 
     final public static String[] actionTypes = {
-            "ro.pub.cs.systems.eim.practicaltest01.arithmeticmean",
-            "ro.pub.cs.systems.eim.practicaltest01.geometricmean"
+            "ro.pub.cs.systems.eim.practicaltest01.instructions",
     };
 
     public ProcessingThread(Context context, String instrr) {
@@ -40,7 +39,6 @@ public class ProcessingThread extends Thread {
         Intent intent = new Intent();
         intent.setAction(actionTypes[random.nextInt(actionTypes.length)]);
         String message = new Date(System.currentTimeMillis()) + " " + instr;
-        Log.d("TAG", message);
         intent.putExtra("message", message);
         context.sendBroadcast(intent);
     }
