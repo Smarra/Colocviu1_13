@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button navigateButton, buttonNorth, buttonEast, buttonWest, buttonSouth, buttonIntent;
     TextView textView, textSum;
+    boolean n = false, s = false, e = false, w = false;
 
     private void increaseSum() {
         int sum = Integer.parseInt(textSum.getText().toString());
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(newtext);
 
                 increaseSum();
+                n = true;
             }
         });
 
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(newtext);
 
                 increaseSum();
+                e = true;
             }
         });
 
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(newtext);
 
                 increaseSum();
+                w = true;
             }
         });
 
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(newtext);
 
                 increaseSum();
+                s = true;
             }
         });
 
@@ -102,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent("android.intent.action.Colocviu.Secondary");
                 intent.putExtra("INSTRUCTIONS", txt);
                 startActivityForResult(intent, 404);
+
+                if (n && e && w && s) {
+                    Intent intent2 = new Intent(getApplicationContext(), Colocviu1_13Service.class);
+                    intent2.putExtra("INSTRS", txt);
+                    getApplicationContext().startService(intent2);
+                }
             }
         });
 
