@@ -2,16 +2,18 @@ package com.example.colocviu1_13;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button navigateButton, buttonNorth, buttonEast, buttonWest, buttonSouth;
+    Button navigateButton, buttonNorth, buttonEast, buttonWest, buttonSouth, buttonIntent;
     TextView textView, textSum;
 
     private void increaseSum() {
@@ -91,8 +93,33 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // INTENTS
+        buttonIntent = (Button)findViewById(R.id.buttonIntent);
+        buttonIntent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String txt = textView.getText().toString();
+                Intent intent = new Intent("android.intent.action.Colocviu.Secondary");
+                intent.putExtra("INSTRUCTIONS", txt);
+                startActivityForResult(intent, 404);
+            }
+        });
+
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        switch(requestCode) {
+            case 404:
+                if (resultCode == 1)
+                    Toast.makeText(this, "Register pressed", Toast.LENGTH_LONG).show();
+                if (resultCode == 1)
+                    Toast.makeText(this, "Cancel pressed", Toast.LENGTH_LONG).show();
+                textView.setText("Directions:");
+                textSum.setText("0");
+                break;
+        }
+    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
